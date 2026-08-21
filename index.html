@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Studio Typographique des Khassaïdes — Khattul Khadim</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts arabes traditionnelles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Lateef:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet"/>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* STYLE CALLIGRAPHIQUE EXACT "SAFAR / KHATTUL KHADIM" */
+        .font-safar-authentic {
+            font-family: 'Amiri', 'Scheherazade New', serif;
+            font-weight: 700;
+            line-height: 1.75;
+            letter-spacing: 0.02em;
+            word-spacing: 0.1em;
+            text-shadow: 0 0.5px 0.5px rgba(0,0,0,0.8), 0 0 1px rgba(0,0,0,0.6);
+            -webkit-text-stroke: 0.8px #111111;
+        }
+
+        .font-khadim-qasida {
+            font-family: 'Scheherazade New', serif;
+            font-weight: 700;
+            line-height: 1.8;
+            -webkit-text-stroke: 0.4px #111111;
+        }
+
+        .font-khadim-ruqaa {
+            font-family: 'Aref Ruqaa', cursive;
+            font-weight: 700;
+            line-height: 1.8;
+        }
+
+        /* FOND PARCHEMIN DORÉ AUTHENTIQUE DE L'IMAGE */
+        .safar-parchment {
+            background-color: #EFE4C8;
+            background-image: 
+                radial-gradient(circle at center, #F7EED8 0%, #E8DBB8 70%, #DACBA3 100%);
+            position: relative;
+        }
+
+        /* MÉDAILLON CIRCULAIRE DORÉ EN FILIGRANE */
+        .safar-gold-medallion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 88%;
+            height: 88%;
+            max-width: 520px;
+            max-height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(243, 222, 148, 0.65) 0%, rgba(228, 201, 118, 0.45) 60%, rgba(215, 185, 96, 0.1) 85%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .safar-gold-medallion::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            border: 2px dashed rgba(197, 163, 76, 0.3);
+        }
+    </style>
+</head>
+
+<body class="h-full bg-slate-900 text-slate-100 flex flex-col antialiased select-none">
+
+    <!-- HEADER DU STUDIO -->
+    <header class="bg-slate-950 border-b border-slate-800 px-4 md:px-8 py-3.5 flex justify-between items-center z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+                <i data-lucide="feather" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-sm md:text-base text-white tracking-tight flex items-center gap-2">
+                    <span>Studio Calligraphique — Khattul Khadim</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">STYLE « SAFAR »</span>
+                </h1>
+                <p class="text-[11px] text-slate-400">Reconstitution Typographique & Vectorisation des Khassaïdes • Kër Qasida yi</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <a href="/" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-700">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Retour au Portail</span>
+            </a>
+            <button onclick="exportGlyphSVG()" class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Exporter le Glyphe (SVG)</span>
+            </button>
+        </div>
+    </header>
+
+
+    <!-- CORPS DU STUDIO -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        
+        <!-- 1. PANNEAU DE CONTRÔLE CALLIGRAPHIQUE (GAUCHE) -->
+        <aside class="w-full lg:w-80 bg-slate-950 border-r border-slate-800 p-5 overflow-y-auto space-y-6 flex-shrink-0">
+            
+            <!-- Choix du Style de Tracé -->
+            <div>
+                <label class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5 mb-2.5">
+                    <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+                    <span>1. Style Calligraphique</span>
+                </label>
+                <div class="space-y-2">
+                    <button onclick="setCalligraphyStyle('font-safar-authentic', 'Style Safar Original (Khattul Khadim Noir & Gras)')" class="w-full p-2.5 rounded-xl bg-slate-800 border-2 border-amber-500 text-left transition-all style-btn" id="btnStyle1">
+                        <div class="font-bold text-xs text-white flex items-center justify-between">
+                            <span>Safar Authentique</span>
+                            <span class="text-[9px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-bold">IMAGE</span>
+                        </div>
+                        <div class="text-[10px] text-slate-300">Trait plein noir, calame biseauté, ligatures étendues</div>
+                    </button>
+
+                    <button onclick="setCalligraphyStyle('font-khadim-qasida', 'Style Kër Qasida yi (Édition Classique)')" class="w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition-all style-btn" id="btnStyle2">
+                        <div class="font-bold text-xs text-white">Kër Qasida Standard</div>
+                        <div class="text-[10px] text-slate-400">Édition imprimée classique</div>
+                    </button>
+
+                    <button onclick="setCalligraphyStyle('font-khadim-ruqaa', 'Style Copistes & Érudits')" class="w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left transition-all style-btn" id="btnStyle3">
+                        <div class="font-bold text-xs text-white">Copistes Anciens</div>
+                        <div class="text-[10px] text-slate-400">Déliés fins et écriture cursive</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Réglages du Calame & Encre -->
+            <div class="space-y-4 pt-4 border-t border-slate-800">
+                <label class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                    <span>2. Calame & Encre Noire</span>
+                </label>
+
+                <!-- Taille de police -->
+                <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span class="text-slate-300">Taille du corps :</span>
+                        <span id="valFontSize" class="text-amber-400">36 px</span>
+                    </div>
+                    <input type="range" id="sliderFontSize" min="24" max="64" value="36" class="w-full accent-amber-500" oninput="updateTypography()">
+                </div>
+
+                <!-- Interligne (Hauteur entre les versets) -->
+                <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span class="text-slate-300">Interligne :</span>
+                        <span id="valLineHeight" class="text-amber-400">1.75</span>
+                    </div>
+                    <input type="range" id="sliderLineHeight" min="1.4" max="2.4" step="0.05" value="1.75" class="w-full accent-amber-500" oninput="updateTypography()">
+                </div>
+
+                <!-- Épaisseur du Calame (Biseau) -->
+                <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span class="text-slate-300">Épaisseur du Calame :</span>
+                        <span id="valStroke" class="text-amber-400">0.8 px</span>
+                    </div>
+                    <input type="range" id="sliderStroke" min="0" max="2" step="0.2" value="0.8" class="w-full accent-amber-500" oninput="updateTypography()">
+                </div>
+            </div>
+
+            <!-- Boutons de Poèmes Pré-chargés -->
+            <div class="pt-4 border-t border-slate-800 space-y-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                    Poèmes & Versets :
+                </label>
+                <div class="grid grid-cols-1 gap-1.5">
+                    <button onclick="loadPoem('safar')" class="px-3 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold text-left flex items-center justify-between">
+                        <span>✨ Safara Hayâtî (Exact image)</span>
+                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="loadPoem('matlab')" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold text-left">
+                        Matlaboul Fawzayni
+                    </button>
+                    <button onclick="loadPoem('jaza')" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-bold text-left">
+                        Jazâ-ou Chakoûr
+                    </button>
+                </div>
+            </div>
+
+        </aside>
+
+
+        <!-- 2. ZONE DE RENDU DU MANUSCRIT (CENTRE) -->
+        <main class="flex-1 flex flex-col bg-slate-900 overflow-hidden">
+            
+            <!-- Barre d'outils -->
+            <div class="bg-slate-950 border-b border-slate-800 px-6 py-2.5 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-slate-400">Modèle actif :</span>
+                    <span id="currentStyleLabel" class="text-xs font-extrabold text-amber-300">Style Safar Original (Khattul Khadim Noir & Gras)</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleWatermark()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 flex items-center gap-1.5 border border-slate-700">
+                        <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span id="watermarkToggleText">Médaillon Doré : Actif</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page de Rendu Parchemin Parfaitement Conforme à l'Image -->
+            <div class="flex-1 p-4 md:p-8 overflow-y-auto flex items-center justify-center">
+                <div class="w-full max-w-2xl safar-parchment rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-[#D8C7A0] text-slate-950 relative overflow-hidden flex flex-col items-center justify-center min-h-[580px]">
+                    
+                    <!-- Médaillon Doré Circulaire en Arrière-plan -->
+                    <div id="goldMedallion" class="safar-gold-medallion"></div>
+
+                    <!-- En-tête Titre avec Étoiles (( * صَفَرْ * )) -->
+                    <div class="relative z-10 text-center mb-4">
+                        <div id="renderTitle" class="font-safar-authentic text-3xl md:text-4xl text-black font-extrabold tracking-wider" dir="rtl">
+                            (( ۞ صَفَرْ ۞ ))
+                        </div>
+                    </div>
+
+                    <!-- Lignes de Versets Calligraphiques -->
+                    <div class="relative z-10 w-full text-center">
+                        <div id="renderVerses" class="font-safar-authentic text-black text-2xl md:text-3xl text-center space-y-1.5 font-bold" dir="rtl" style="font-size: 36px;">
+                            <div>صَفَّرَ حَيَاتِيْ مِنْ لِغَيْرِهِ ذَهَبَا</div>
+                            <div>بِمَنْ كَفَانِيْ وَالْمُنَى لِيْ وَهَبَا</div>
+                            <div>فُزْتُ بِمَا يَزِيدُنِيْ تَبْشِيْرَا</div>
+                            <div>وَبِيَ يَسُرُّ مَالِكَ الْبَشِيْرَا</div>
+                            <div>وَاصْرِفْ لِيَ الْبَاقِي عِدَايَ قَاصِدِيْنَ</div>
+                            <div>إِلَى سِوَايَ وَلِغَيْرِي رَاصِدِيْنَ</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Zone de Saisie Manuelle en Direct -->
+            <div class="bg-slate-950 border-t border-slate-800 p-4 flex items-center gap-3">
+                <span class="text-xs font-bold text-slate-400 whitespace-nowrap">Texte à restituer :</span>
+                <input type="text" id="liveTextInput" class="flex-1 bg-slate-900 border border-slate-700 focus:border-amber-500 rounded-xl px-4 py-2 text-white text-base text-right font-semibold focus:ring-0" dir="rtl" value="صَفَّرَ حَيَاتِيْ مِنْ لِغَيْرِهِ ذَهَبَا" oninput="handleLiveInput(event)">
+                <button onclick="resetToSafar()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span>Rétablir Safar</span>
+                </button>
+            </div>
+
+        </main>
+
+
+        <!-- 3. TABLE DES GLYPHES & DÉTAILS ANATOMIQUES (DROITE) -->
+        <aside class="w-full lg:w-80 bg-slate-950 border-l border-slate-800 p-5 overflow-y-auto flex-shrink-0 space-y-5">
+            
+            <div class="flex justify-between items-center">
+                <label class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+                    <span>Anatomie des Lettres</span>
+                </label>
+                <span class="text-[10px] text-slate-400">28 Lettres</span>
+            </div>
+
+            <!-- Grille des Lettres Extraites -->
+            <div class="grid grid-cols-4 gap-2 text-center" id="glyphGrid"></div>
+
+            <!-- Visualiseur Vectoriel de Lettre Isolée (Canvas de précision) -->
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-center">
+                <span class="text-[11px] font-bold text-slate-400 block mb-2">Glyphe Sélectionné (Traits pleins) :</span>
+                
+                <div class="w-32 h-32 mx-auto safar-parchment rounded-xl border border-amber-500/40 flex items-center justify-center relative overflow-hidden shadow-inner">
+                    <span id="selectedGlyphPreview" class="text-6xl text-black font-safar-authentic relative z-10">ص</span>
+                </div>
+
+                <div class="mt-3 text-left space-y-1.5 text-[11px] text-slate-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Biseau du Calame :</span>
+                        <b class="text-amber-400">Angle 45°</b>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Ligature Kashida :</span>
+                        <b class="text-emerald-400">Étirée basse</b>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Format d'export :</span>
+                        <b class="text-cyan-400">OpenType .OTF / SVG</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs leading-relaxed space-y-1">
+                <p class="font-bold">✨ Particularités visibles sur l'image :</p>
+                <p>• <b>Le Sâd (ص) :</b> Forme horizontale très étirée avec boucle fermée basse.</p>
+                <p>• <b>Le Yâ (ـي) :</b> Terminaison en queue de calame retournée sous le mot (ex: <i>حياتي</i>, <i>كفاني</i>, <i>لي</i>).</p>
+                <p>• <b>Le Kâf (كـ) :</b> Barre supérieure plate et corps bas (ex: <i>كفاني</i>, <i>مالك</i>).</p>
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- SCRIPT DU STUDIO -->
+    <script>
+        lucide.createIcons();
+
+        const renderVerses = document.getElementById('renderVerses');
+        const renderTitle = document.getElementById('renderTitle');
+        const liveTextInput = document.getElementById('liveTextInput');
+        const currentStyleLabel = document.getElementById('currentStyleLabel');
+        const selectedGlyphPreview = document.getElementById('selectedGlyphPreview');
+        const goldMedallion = document.getElementById('goldMedallion');
+        const watermarkToggleText = document.getElementById('watermarkToggleText');
+
+        const sliderFontSize = document.getElementById('sliderFontSize');
+        const sliderLineHeight = document.getElementById('sliderLineHeight');
+        const sliderStroke = document.getElementById('sliderStroke');
+
+        let currentFontClass = 'font-safar-authentic';
+        let watermarkVisible = true;
+
+        const arabicAlphabet = [
+            'ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 
+            'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 
+            'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 
+            'ك', 'ل', 'م', 'ن', 'هـ', 'و', 'ي'
+        ];
+
+        // Remplissage de la grille de glyphes
+        const glyphGrid = document.getElementById('glyphGrid');
+        arabicAlphabet.forEach(char => {
+            const btn = document.createElement('button');
+            btn.className = 'h-11 rounded-xl bg-slate-900 hover:bg-amber-500/20 hover:border-amber-500/50 border border-slate-800 text-lg font-bold text-white transition-all flex items-center justify-center font-safar-authentic';
+            btn.innerText = char;
+            btn.onclick = () => selectGlyph(char);
+            glyphGrid.appendChild(btn);
+        });
+
+        function selectGlyph(char) {
+            selectedGlyphPreview.innerText = char;
+        }
+
+        function setCalligraphyStyle(fontClass, labelText) {
+            renderVerses.classList.remove('font-safar-authentic', 'font-khadim-qasida', 'font-khadim-ruqaa');
+            renderTitle.classList.remove('font-safar-authentic', 'font-khadim-qasida', 'font-khadim-ruqaa');
+            selectedGlyphPreview.classList.remove('font-safar-authentic', 'font-khadim-qasida', 'font-khadim-ruqaa');
+
+            renderVerses.classList.add(fontClass);
+            renderTitle.classList.add(fontClass);
+            selectedGlyphPreview.classList.add(fontClass);
+
+            currentFontClass = fontClass;
+            currentStyleLabel.innerText = labelText;
+
+            document.querySelectorAll('.style-btn').forEach(btn => btn.classList.remove('border-amber-500', 'bg-slate-800', 'border-2'));
+            event.currentTarget.classList.add('border-amber-500', 'bg-slate-800', 'border-2');
+        }
+
+        function updateTypography() {
+            const size = sliderFontSize.value;
+            const lineHeight = sliderLineHeight.value;
+            const stroke = sliderStroke.value;
+
+            document.getElementById('valFontSize').innerText = size + ' px';
+            document.getElementById('valLineHeight').innerText = lineHeight;
+            document.getElementById('valStroke').innerText = stroke + ' px';
+
+            renderVerses.style.fontSize = size + 'px';
+            renderVerses.style.lineHeight = lineHeight;
+            renderVerses.style.webkitTextStroke = stroke + 'px #111111';
+            renderTitle.style.webkitTextStroke = (parseFloat(stroke) + 0.3) + 'px #111111';
+        }
+
+        function handleLiveInput(e) {
+            renderVerses.innerHTML = `<div>${e.target.value || 'صَفَّرَ حَيَاتِيْ'}</div>`;
+        }
+
+        function toggleWatermark() {
+            watermarkVisible = !watermarkVisible;
+            if (watermarkVisible) {
+                goldMedallion.style.display = 'block';
+                watermarkToggleText.innerText = 'Médaillon Doré : Actif';
+            } else {
+                goldMedallion.style.display = 'none';
+                watermarkToggleText.innerText = 'Médaillon Doré : Masqué';
+            }
+        }
+
+        function loadPoem(type) {
+            if (type === 'safar') {
+                renderTitle.innerText = '(( ۞ صَفَرْ ۞ ))';
+                renderVerses.innerHTML = `
+                    <div>صَفَّرَ حَيَاتِيْ مِنْ لِغَيْرِهِ ذَهَبَا</div>
+                    <div>بِمَنْ كَفَانِيْ وَالْمُنَى لِيْ وَهَبَا</div>
+                    <div>فُزْتُ بِمَا يَزِيدُنِيْ تَبْشِيْرَا</div>
+                    <div>وَبِيَ يَسُرُّ مَالِكَ الْبَشِيْرَا</div>
+                    <div>وَاصْرِفْ لِيَ الْبَاقِي عِدَايَ قَاصِدِيْنَ</div>
+                    <div>إِلَى سِوَايَ وَلِغَيْرِي رَاصِدِيْنَ</div>
+                `;
+            } else if (type === 'matlab') {
+                renderTitle.innerText = '(( ۞ مَطْلَبُ الْفَوْزَيْنِ ۞ ))';
+                renderVerses.innerHTML = `
+                    <div>مَطْلَبُ الْفَوْزَيْنِ فِي الْمَنْزِلَيْنِ</div>
+                    <div>وَالْفَوْزُ بِالْخَيْرَاتِ فِي الدَّارَيْنِ</div>
+                    <div>يَا رَبِّ صَلِّ وَسَلِّمْ عَلَى الْمُخْتَارِ</div>
+                    <div>وَآلِهِ وَصَحْبِهِ الأَخْيَارِ</div>
+                `;
+            } else if (type === 'jaza') {
+                renderTitle.innerText = '(( ۞ جَزَاءُ الشَّكُورِ ۞ ))';
+                renderVerses.innerHTML = `
+                    <div>جَزَاءُ الشَّكُورِ لِمَنْ أَرَادَ السُّرُورَ</div>
+                    <div>فِي كُلِّ حِينٍ وَدَفْعَ الشُّرُورِ</div>
+                    <div>بِجَاهِ خَيْرِ الأَنَامِ عَلَيْهِ الصَّلاَةُ</div>
+                    <div>وَالسَّلاَمُ وَالْبَرَكَاتُ الدَّائِمَاتُ</div>
+                `;
+            }
+        }
+
+        function resetToSafar() {
+            loadPoem('safar');
+            liveTextInput.value = 'صَفَّرَ حَيَاتِيْ مِنْ لِغَيْرِهِ ذَهَبَا';
+        }
+
+        function exportGlyphSVG() {
+            const char = selectedGlyphPreview.innerText;
+            const svgData = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <!-- Fond Parchemin Doré Safar -->
+  <rect width="1000" height="1000" fill="#EFE4C8"/>
+  <circle cx="500" cy="500" r="400" fill="#F4E39E" opacity="0.6"/>
+  <!-- Tracé Calligraphique Khassida -->
+  <text x="500" y="650" font-size="600" text-anchor="middle" font-family="Amiri, serif" font-weight="bold" fill="#111111" stroke="#111111" stroke-width="8">${char}</text>
+</svg>`;
+            const blob = new Blob([svgData], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `glyphe_safar_${char}.svg`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
